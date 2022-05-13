@@ -14,6 +14,7 @@ public class BulletManager : MonoBehaviour
     public int defaultShotGunBullet;
     public int defaultFlameGunBullet;
     public int defaultBombBullet;
+    public int defaultRocketLauncherBullet;
 
 
 
@@ -23,6 +24,7 @@ public class BulletManager : MonoBehaviour
         defaultHevyMachinGunBullet = 200;
         defaultShotGunBullet = 30;
         defaultFlameGunBullet = 30;
+        defaultRocketLauncherBullet = 30;
         defaultBombBullet = 10;
     }
 
