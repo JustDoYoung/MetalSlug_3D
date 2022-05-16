@@ -7,12 +7,7 @@ public class PlayerShooting : MonoBehaviour
     public GameObject grenadeFactory;
     public Transform ThrowPosition;
 
-    public GameObject defaultGunEffect;
-    public GameObject heavyMachineGunEffect;
-    public GameObject flameGunEffect;
-    public GameObject shotGunEffect;
-    public GameObject grenadeEffect;
-
+   
 
     public enum GunState
     {
@@ -40,19 +35,28 @@ public class PlayerShooting : MonoBehaviour
             switch (gunState)
             {
                 case GunState.defaultGun:
-                    Instantiate(defaultGunEffect, ThrowPosition);
+                    GameObject dgBUllet = BulletManager.instance.MakeObj("DefaultGun");
+                    dgBUllet.transform.position = ThrowPosition.position;
                     break;
 
                 case GunState.heavyMachine:
-                    Instantiate(heavyMachineGunEffect, ThrowPosition);
+                    BulletManager.instance.defaultHevyMachinGunBullet--;
+                    GameObject hmBullet = BulletManager.instance.MakeObj("HeavyMachinGun");
+                    hmBullet.transform.position = ThrowPosition.position;
+                    
                     break;
 
                 case GunState.flameGun:
-                    Instantiate(flameGunEffect, ThrowPosition);
+                    BulletManager.instance.defaultFlameGunBullet--;
+                    
                     break;
 
                 case GunState.shotGun:
-                    Instantiate (shotGunEffect, ThrowPosition);
+                    BulletManager.instance.defaultShotGunBullet--;
+                    break;
+
+                case GunState.rocketLauncher:
+                    BulletManager.instance.defaultRocketLauncherBullet--;
                     break;
 
             }
@@ -80,36 +84,28 @@ public class PlayerShooting : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if(other.name == "HeavyMachinGun")
-        {          
-            if(gunState == GunState.heavyMachine)
-            {
-                BulletManager.instance.defaultHevyMachinGunBullet += 200;
-            }
+        {                     
+            
+            BulletManager.instance.defaultHevyMachinGunBullet += 200;            
             gunState = GunState.heavyMachine;
         }
 
         if(other.name == "FlameGun")
         {
-            if(gunState == GunState.flameGun)
-            {
-                BulletManager.instance.defaultFlameGunBullet += 30;
-            }
+           
+            BulletManager.instance.defaultFlameGunBullet += 30;            
             gunState= GunState.flameGun;
         }
         if(other.name == "ShotGun") 
         {
-            if(gunState== GunState.shotGun)
-            {
-                BulletManager.instance.defaultShotGunBullet += 30;
-            }
+            
+            BulletManager.instance.defaultShotGunBullet += 30;            
             gunState = GunState.shotGun;
         }
         if(other.name == "Rocket")
         {
-            if(gunState == GunState.rocketLauncher)
-            {
-                BulletManager.instance.defaultRocketLauncherBullet += 30;
-            }
+            
+            BulletManager.instance.defaultRocketLauncherBullet += 30;           
             gunState = GunState.rocketLauncher;
         }
         if(other.name == "Bomb")
