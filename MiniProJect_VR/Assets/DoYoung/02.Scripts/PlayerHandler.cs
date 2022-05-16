@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerHandler : MonoBehaviour
 {
+    public GameObject targetLock;
     public Transform model;
 
     private Animator anim;
@@ -15,6 +16,7 @@ public class PlayerHandler : MonoBehaviour
     public float rotationSpeed = 30f;
 
     private bool isWeaponEquipped = false;
+    private bool isTargetLocked = false;
 
     void Start()
     {
@@ -31,25 +33,46 @@ public class PlayerHandler : MonoBehaviour
         stickDirection = new Vector3(h, 0, v);
 
         HandlerInputData();
-        HandlerStandardLocomotionRotation();
+        if (isTargetLocked) HandlerTargetLockedLocomotionRotation();
+        else HandlerStandardLocomotionRotation();
     }
+
 
     private void HandlerStandardLocomotionRotation()
     {
         Vector3 rotationOffset = /*vodoo magic*/ mainCamera.transform.TransformDirection(stickDirection);
         rotationOffset.y = 0;
         model.forward += Vector3.Lerp(model.forward, rotationOffset, Time.deltaTime * rotationSpeed);
-        print(model.forward);
+    }
+    private void HandlerTargetLockedLocomotionRotation()
+    {
+        Vector3 rotationOffset = /*vodoo magic*/ targetLock.transform.position - model.position;
+        rotationOffset.y = 0;
+        model.forward += Vector3.Lerp(model.forward, rotationOffset, Time.deltaTime * rotationSpeed);
     }
     void HandlerInputData()
     {
         anim.SetFloat("Speed", Vector3.ClampMagnitude(stickDirection, 1).magnitude);
+        anim.SetFloat("Horizontal", stickDirection.x);
+        anim.SetFloat("Vertical", stickDirection.z);
 
-        if (Input.GetKeyDown(KeyCode.F))
+        isWeaponEquipped = anim.GetBool("isWeaponEquipped");
+        isTargetLocked = anim.GetBool("isTargetLocked");
+
+        if (isWeaponEquipped && Input.GetKeyDown(KeyCode.Space))
         {
-            isWeaponEquipped = anim.GetBool("isWeaponEquipped");
+            anim.SetBool("isTargetLocked", !isTargetLocked);
+            isTargetLocked = !isTargetLocked;
+        }
+        else if (Input.GetKeyDown(KeyCode.F))
+        {
             anim.SetBool("isWeaponEquipped", !isWeaponEquipped);
             isWeaponEquipped = !isWeaponEquipped;
+            if (false == isWeaponEquipped)
+            {
+                anim.SetBool("isTargetLocked", false);
+                isTargetLocked = false;
+            }
         }
     }
 }
