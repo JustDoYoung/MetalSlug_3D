@@ -22,45 +22,88 @@ public class PlayerShooting : MonoBehaviour
     private void Start()
     {
         gunState = GunState.defaultGun;
+        BulletManager.instance.defaultBombBullet = 10;
+      
     }
 
     
-    void Update()
+    void FixedUpdate()
     {
+       
 
+        if (gunState != GunState.heavyMachine)
+        {
+            BulletManager.instance.defaultHevyMachinGunBullet = 0;
+        }
+        if(gunState != GunState.flameGun)
+        {
+            BulletManager.instance.defaultFlameGunBullet = 0;
+        }
+        if(gunState != GunState.shotGun)
+        {
+            BulletManager.instance.defaultShotGunBullet = 0;
+        }
+        if(gunState != GunState.rocketLauncher)
+        {
+            BulletManager.instance.defaultRocketLauncherBullet = 0;
+        }
+
+        
         
 
         if (Input.GetMouseButtonDown(0))
         {
-            switch (gunState)
+            
+                switch (gunState)
+                {
+                    case GunState.defaultGun:
+                        GameObject dgBUllet = BulletManager.instance.MakeObj("DefaultGun");
+                        break;
+
+                    case GunState.heavyMachine:
+                        BulletManager.instance.defaultHevyMachinGunBullet--;
+                        GameObject hmBullet = BulletManager.instance.MakeObj("HeavyMachinGun");
+                        if (BulletManager.instance.defaultHevyMachinGunBullet == 0)
+                        {
+                            gunState = GunState.defaultGun;
+                        }
+
+                        break;
+
+                    case GunState.flameGun:
+                        BulletManager.instance.defaultFlameGunBullet--;
+                        if (BulletManager.instance.defaultFlameGunBullet == 0)
+                        {
+                            gunState = GunState.defaultGun;
+                        }
+
+                        break;
+
+                    case GunState.shotGun:
+                        BulletManager.instance.defaultShotGunBullet--;
+                        if (BulletManager.instance.defaultShotGunBullet == 0)
+                        {
+                            gunState = GunState.defaultGun;
+                        }
+                        break;
+
+                    case GunState.rocketLauncher:
+                        BulletManager.instance.defaultRocketLauncherBullet--;
+                        if (BulletManager.instance.defaultRocketLauncherBullet == 0)
+                        {
+                            gunState = GunState.defaultGun;
+                        }
+                        break;
+
+                }
+            for (int i = 0; i < BulletManager.instance.targetPool.Length; i++)
             {
-                case GunState.defaultGun:
-                    GameObject dgBUllet = BulletManager.instance.MakeObj("DefaultGun");
-                    dgBUllet.transform.position = ThrowPosition.position;
-                    break;
-
-                case GunState.heavyMachine:
-                    BulletManager.instance.defaultHevyMachinGunBullet--;
-                    GameObject hmBullet = BulletManager.instance.MakeObj("HeavyMachinGun");
-                    hmBullet.transform.position = ThrowPosition.position;
-                    
-                    break;
-
-                case GunState.flameGun:
-                    BulletManager.instance.defaultFlameGunBullet--;
-                    
-                    break;
-
-                case GunState.shotGun:
-                    BulletManager.instance.defaultShotGunBullet--;
-                    break;
-
-                case GunState.rocketLauncher:
-                    BulletManager.instance.defaultRocketLauncherBullet--;
-                    break;
-
+                BulletManager.instance.targetPool[i].gameObject.transform.position += transform.forward * 20f * Time.fixedDeltaTime;
             }
-           
+
+
+
+
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -71,8 +114,6 @@ public class PlayerShooting : MonoBehaviour
                 GameObject grenade = Instantiate(grenadeFactory);
 
                 grenade.transform.position = ThrowPosition.position;
-
-                grenade.transform.forward = ThrowPosition.forward;
 
                 BulletManager.instance.defaultBombBullet--;
             }
@@ -116,5 +157,6 @@ public class PlayerShooting : MonoBehaviour
         Destroy(other.gameObject);
 
     }
-    
+
+
 }

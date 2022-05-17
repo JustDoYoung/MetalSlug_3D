@@ -20,6 +20,8 @@ public class BulletManager : MonoBehaviour
 
     }
 
+    PlayerShooting ps;
+
     public int defaultHevyMachinGunBullet;
     public int defaultShotGunBullet;
     public int defaultFlameGunBullet;
@@ -41,10 +43,19 @@ public class BulletManager : MonoBehaviour
     GameObject[] rlBullet;
     GameObject[] grBullet;
 
-    GameObject[] targetPool;
+    public GameObject[] targetPool;
 
 
-    GameObject bulletFactory = null;
+    public Transform dfParent;
+    public Transform hmParent;
+    public Transform fgParent;
+    public Transform sgParent;
+    public Transform rlParent;
+    public Transform grParent;
+    
+
+
+    
 
 
 
@@ -64,6 +75,7 @@ public class BulletManager : MonoBehaviour
         for (int i = 0; i < dfBullet.Length; i++)
         {
             GameObject defaultbullet = Instantiate(defaultGunEffect);
+            defaultbullet.transform.parent = dfParent;
             dfBullet[i] = defaultbullet;
             defaultbullet.SetActive(false);
         }
@@ -71,6 +83,7 @@ public class BulletManager : MonoBehaviour
         for (int i = 0; i < hMBullet.Length; i++)
         {
             GameObject heavyMachingunBullet = Instantiate(heavyMachineGunEffect);
+            heavyMachingunBullet.transform.parent = hmParent;
             hMBullet[i] = heavyMachingunBullet;
             heavyMachingunBullet.SetActive(false);
         }
@@ -78,6 +91,7 @@ public class BulletManager : MonoBehaviour
         for (int i = 0; i < sgBullet.Length; i++)
         {
             GameObject shotGunBullet = Instantiate(shotGunEffect);
+            shotGunBullet.transform.parent = sgParent;
             sgBullet[i] = shotGunBullet;
             shotGunBullet.SetActive(false);
         }
@@ -85,6 +99,7 @@ public class BulletManager : MonoBehaviour
         for (int i = 0; i < fgBullet.Length; i++)
         {
             GameObject flameGunBullet = Instantiate(flameGunEffect);
+            flameGunBullet.transform.parent = fgParent;
             fgBullet[i] = flameGunBullet;
             flameGunBullet.SetActive(false);
         }
@@ -92,6 +107,7 @@ public class BulletManager : MonoBehaviour
         for (int i = 0; i < rlBullet.Length; i++)
         {
             GameObject rocketLauncherBullet = Instantiate(rocketLauncherEffect);
+            rocketLauncherBullet.transform.parent = rlParent;
             rlBullet[i] = rocketLauncherBullet;
             rocketLauncherBullet.SetActive(false);
         }
@@ -99,6 +115,7 @@ public class BulletManager : MonoBehaviour
         for (int i = 0; i < grBullet.Length; i++)
         {
             GameObject BombBullet = Instantiate(grenadeEffect);
+            BombBullet.transform.parent = grParent;
             grBullet[i] = BombBullet;
             BombBullet.SetActive(false);
         }
@@ -118,7 +135,7 @@ public class BulletManager : MonoBehaviour
                 break;
 
             case "FlameGun":
-                targetPool=fgBullet;
+                targetPool = fgBullet;
                 break;
 
             case "ShotGun":
