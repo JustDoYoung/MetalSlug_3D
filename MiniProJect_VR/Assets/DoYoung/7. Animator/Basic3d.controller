@@ -62,7 +62,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5417315750776568250}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 7028189487413851454}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
   m_WriteDefaultValues: 1
@@ -267,6 +268,7 @@ AnimatorState:
   - {fileID: -6925660776778700093}
   m_StateMachineBehaviours:
   - {fileID: 7726580312525307578}
+  - {fileID: 6777829792770175189}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
   m_WriteDefaultValues: 1
@@ -293,9 +295,10 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 8451883336612400552}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 7761644484865616439}
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -318,6 +321,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: isWeaponEquipped
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: IsWeaponReady
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3534403193003106145}
@@ -397,7 +403,8 @@ AnimatorState:
   - {fileID: 9190712469874303574}
   - {fileID: -72110592253368964}
   - {fileID: -1760745653750539959}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 3776250011976834944}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -412,6 +419,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-3453137222343137365
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c14ab36a6a7fc45819c19eea84e50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParamStateData:
+  - paramName: IsWeaponReady
+    setDefaultState: 1
 --- !u!1102 &-2889060215438910299
 AnimatorState:
   serializedVersion: 6
@@ -553,6 +575,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 2
     m_ConditionEvent: isWeaponEquipped
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: IsAttacking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5268212301641772032}
@@ -719,49 +744,61 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isWeaponEquipped
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Horizontal
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Vertical
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isTargetLocked
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: CanAttack
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: IsWeaponReady
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   - m_Name: Attack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: AttackType
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: IsAttacking
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -989,7 +1026,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -1700391204918938048}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -3453137222343137365}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
   m_WriteDefaultValues: 1
@@ -1056,6 +1094,25 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 73579810690784472}
+--- !u!114 &3776250011976834944
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c14ab36a6a7fc45819c19eea84e50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParamStateData:
+  - paramName: CanAttack
+    setDefaultState: 1
+  - paramName: Attack
+    setDefaultState: 0
+  - paramName: IsAttacking
+    setDefaultState: 0
 --- !u!1102 &4121375027087165608
 AnimatorState:
   serializedVersion: 6
@@ -1225,6 +1282,38 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &6777829792770175189
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c14ab36a6a7fc45819c19eea84e50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParamStateData:
+  - paramName: IsWeaponReady
+    setDefaultState: 0
+--- !u!114 &7028189487413851454
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c14ab36a6a7fc45819c19eea84e50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParamStateData:
+  - paramName: CanAttack
+    setDefaultState: 0
+  - paramName: IsAttacking
+    setDefaultState: 1
 --- !u!1101 &7696281897087168743
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1261,6 +1350,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 1
   eventTime: 0.5
+--- !u!114 &7761644484865616439
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c14ab36a6a7fc45819c19eea84e50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParamStateData:
+  - paramName: CanAttack
+    setDefaultState: 0
+  - paramName: IsAttacking
+    setDefaultState: 1
 --- !u!1107 &7900825785969688626
 AnimatorStateMachine:
   serializedVersion: 6

@@ -64,7 +64,7 @@ public class PlayerHandler : MonoBehaviour
             anim.SetBool("isTargetLocked", !isTargetLocked);
             isTargetLocked = !isTargetLocked;
         }
-        else if (Input.GetKeyDown(KeyCode.F))
+        else if (Input.GetKeyDown(KeyCode.F) && !anim.GetBool("IsAttacking"))
         {
             anim.SetBool("isWeaponEquipped", !isWeaponEquipped);
             isWeaponEquipped = !isWeaponEquipped;
